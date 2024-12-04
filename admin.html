@@ -1,1 +1,364 @@
-dell cho code dau
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+</head>
+<body>
+<style>
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #e0eafc, #cfdef3);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 100px;
+  }
+  
+  .admin-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .admin-header {
+    background: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .admin-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  /* Main Content */
+  .admin-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Card Style */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .card h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Form Section */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .form-actions {
+    text-align: right;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Product List Section */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .product-item img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  
+  .product-item p {
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+  
+  button {
+    background: linear-gradient(45deg, #dc3545, #a71d2a);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+  }
+  
+</style>
+
+<div class="admin-container">
+    <!-- Header -->
+    <header class="admin-header">
+      <h1>Admin Dashboard</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Form Section -->
+      <section class="form-section">
+        <div class="card">
+          <h2>Add / Update Product</h2>
+          <form id="product-form">
+            <div class="form-group">
+              <label for="product-id">Product ID:</label>
+              <input type="text" id="product-id" placeholder="Enter product ID" required>
+            </div>
+            <div class="form-group">
+              <label for="product-title">Title:</label>
+              <input type="text" id="product-title" placeholder="Enter product title" required>
+            </div>
+            <div class="form-group">
+              <label for="product-category">Category:</label>
+              <input type="text" id="product-category" placeholder="Enter category" required>
+            </div>
+            <div class="form-group">
+              <label for="product-price">Price (VND):</label>
+              <input type="number" id="product-price" placeholder="Enter price" required>
+            </div>
+            <div class="form-group">
+              <label for="product-image-url">Image URL:</label>
+              <input type="text" id="product-image-url" placeholder="Enter image URL">
+            </div>
+            <div class="form-group">
+              <label for="product-image-file">Or Upload Image:</label>
+              <input type="file" id="product-image-file" accept="image/*">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Save Product</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Product List Section -->
+      <section class="product-list-section">
+        <div class="card">
+          <h2>Product List</h2>
+          <div id="product-list" class="product-grid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const productForm = document.getElementById("product-form");
+        const productList = document.getElementById("product-list");
+        const imageFileInput = document.getElementById("product-image-file");
+        const imageUrlInput = document.getElementById("product-image-url");
+      
+        // Lấy dữ liệu từ localStorage
+        const getProducts = () => JSON.parse(localStorage.getItem("products")) || [];
+      
+        // Lưu dữ liệu vào localStorage
+        const saveProducts = (products) => localStorage.setItem("products", JSON.stringify(products));
+      
+        // Render danh sách sản phẩm
+        const renderProducts = () => {
+          const products = getProducts();
+          productList.innerHTML = products
+            .map(
+              (product, index) => `
+              <div class="product-item">
+                <p><strong>${product.title}</strong> (${product.category})</p>
+                <p>ID: ${product.id}</p>
+                <p>Price: ${product.price} VND</p>
+                <img src="${product.image}" alt="${product.title}" style="width: 100px; height: auto;">
+                <button onclick="editProduct(${index})">Edit</button>
+                <button onclick="deleteProduct(${index})">Delete</button>
+              </div>
+            `
+            )
+            .join("");
+        };
+      
+        // Xóa sản phẩm
+        window.deleteProduct = (index) => {
+          const products = getProducts();
+          products.splice(index, 1);
+          saveProducts(products);
+          renderProducts();
+        };
+      
+        // Chỉnh sửa sản phẩm
+        window.editProduct = (index) => {
+          const products = getProducts();
+          const product = products[index];
+      
+          document.getElementById("product-id").value = product.id;
+          document.getElementById("product-title").value = product.title;
+          document.getElementById("product-category").value = product.category;
+          document.getElementById("product-price").value = product.price;
+          document.getElementById("product-image-url").value = product.image;
+      
+          productForm.dataset.editIndex = index;
+        };
+      
+        // Xử lý ảnh
+        const processImage = () => {
+          const file = imageFileInput.files[0];
+          return new Promise((resolve) => {
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (event) => resolve(event.target.result); // Base64 URL của ảnh
+              reader.readAsDataURL(file);
+            } else {
+              resolve(imageUrlInput.value.trim()); // URL từ input
+            }
+          });
+        };
+      
+        // Thêm hoặc cập nhật sản phẩm
+        productForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+      
+          const id = document.getElementById("product-id").value.trim();
+          const title = document.getElementById("product-title").value.trim();
+          const category = document.getElementById("product-category").value.trim();
+          const price = document.getElementById("product-price").value.trim();
+      
+          const image = await processImage(); // Xử lý ảnh từ tệp hoặc URL
+      
+          if (!image) {
+            alert("Please provide a valid image URL or upload an image file.");
+            return;
+          }
+      
+          const products = getProducts();
+          const editIndex = productForm.dataset.editIndex;
+      
+          if (editIndex) {
+            products[editIndex] = { id, title, category, price, image };
+            delete productForm.dataset.editIndex;
+          } else {
+            products.push({ id, title, category, price, image });
+          }
+      
+          saveProducts(products);
+          renderProducts();
+          productForm.reset();
+        });
+      
+        renderProducts();
+      });
+      
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const productForm = document.getElementById("product-form");
+      
+        // Lưu sản phẩm vào localStorage
+        const saveProducts = (products) => localStorage.setItem("products", JSON.stringify(products));
+      
+        // Lấy sản phẩm hiện có
+        const getProducts = () => JSON.parse(localStorage.getItem("products")) || [];
+      
+        productForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+      
+          const id = document.getElementById("product-id").value.trim();
+          const title = document.getElementById("product-title").value.trim();
+          const category = document.getElementById("product-category").value.trim();
+          const price = document.getElementById("product-price").value.trim();
+          const image = document.getElementById("product-image-url").value.trim() || null;
+      
+          if (!id || !title || !category || !price || !image) {
+            alert("Please fill in all fields.");
+            return;
+          }
+      
+          const products = getProducts();
+          products.push({ id, title, category, price, image });
+          saveProducts(products);
+      
+          alert("Product added successfully!");
+          productForm.reset();
+        });
+      });
+      
+</script>
